@@ -1,5 +1,6 @@
-fastapi>=0.68.0,<0.69.0
-pydantic>=1.8.0,<2.0.0
-uvicorn>=0.15.0,<0.16.0
+Flask
 pymongo
-pymysql
+python-engineio==3.11.2
+python-socketio==4.4.0
+Flask-socketIO==4.2.1
+eventlet==0.30.0
