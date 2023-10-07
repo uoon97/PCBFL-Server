@@ -1,6 +1,5 @@
 Flask
 pymongo
-python-engineio==3.11.2
-python-socketio==4.4.0
-Flask-socketIO==4.2.1
-eventlet==0.30.0
+python-engineio
+python-socketio
+Flask-socketIO
