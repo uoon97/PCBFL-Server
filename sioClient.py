@@ -24,6 +24,8 @@ def flAggregation(url, capacity, token = None, model_bytes = int):
         response = requests.post(f'{url}:5000/token', json = {'capa': capacity, 'url': url}, verify = False)
         token = json.loads(response.content)['token']
     
+    print(token)
+
     # Flask-SocketIO 서버 주소로 연결
     sio.connect(f'{url}:5000', wait_timeout = 10)
     sio.emit('join', token)

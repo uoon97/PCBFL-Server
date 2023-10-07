@@ -5,13 +5,13 @@ from methods import *
 
 # connect to MongoDB's request collection
 def connReq(url):
-    client = pymongo.MongoClient(f"mongodb://{url}:27017/")
+    client = pymongo.MongoClient(f"mongodb://{url.split('//')[1]}:27017/")
     db = client["mydatabase"]
     collection = db['requests']
     return collection
 
 def connToken(url):
-    client = pymongo.MongoClient(f"mongodb://{url}:27017/")
+    client = pymongo.MongoClient(f"mongodb://{url.split('//')[1]}:27017/")
     db = client["mydatabase"]
     collection = db['tokens']
     return collection
