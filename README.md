@@ -10,16 +10,14 @@ Clone git repo on EC2:
 
     sudo yum update -y
     sudo yum install git -y
-    git clone https://github.com/uoon97/PCB_FFL
+    git clone https://github.com/uoon97/PCB_FL
 
 Run shell script files to build docker image:
 
     cd PCB_FL
 
-    docker run -p 27017:27017 mongo:6.0
-    
-    docker build -t fl_server:0.0 .
-    docker run -p 5000:5000 fl_server:0.0
+    sh docker_start.sh
+    sh container_run.sh
 
 ### Client
 
