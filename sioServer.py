@@ -11,8 +11,9 @@ def onJoin(token):
 
 # token room의 subscriber(client)에게 FL_model 전달.
 @socketio.on('servSend')
-def serverSend(token):
-    colReq = connReq()
+def serverSend(token, url):
+    colToken = connToken(url)
+    colReq = connReq(url)
     documents = colReq.find({'token': token})
 
     mean = 0
@@ -21,17 +22,20 @@ def serverSend(token):
     mean /= colReq.count_documents({'token': token})
 
     socketio.emit('cliRecv', mean, room = token)
+    
+    colReq.delete_many({'token': token})
+    colToken.delete_one({'token': token})
 
 
 # token 생성 및 token의 capa 저장.
 @app.route('/token', methods = ['POST'])
 def genToken():
     if request.method == 'POST':
-        token = generateToken()
-        print(token)
         # insert token to MongoDB
-        colToken = connToken()
-        colToken.insert_one({'token': token, 'capa': request.get_json()['capa']})
+        json = request.get_json()
+        token = generateToken(json['url'])
+        colToken = connToken(json['url'])
+        colToken.insert_one({'token': token, 'capa': json['capa']})
         return {'token': token}
     
 
@@ -42,14 +46,14 @@ def cliReq():
         # json = {'token': token, 'model_bytes': model_bytes}
         json = request.get_json()
         
-        colReq = connReq()
+        colReq = connReq(json['url'])
         colReq.insert_one(json)
 
-        colToken = connToken()
+        colToken = connToken(json['url'])
         capacity = colToken.find_one({'token': json['token']})['capa']
 
         if colReq.count_documents({'token': json['token']}) == capacity:
-            serverSend(json['token'])
+            serverSend(json['token'], json['url'])
 
         return {'status': 'success'}
 

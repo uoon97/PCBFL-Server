@@ -21,7 +21,7 @@ def flAggregation(url, capacity, token = None, model_bytes = int):
 
     # 서버로부터 토큰 발급
     if token == None:
-        response = requests.post(f'{url}:5000/token', json = {'capa': capacity}, verify = False)
+        response = requests.post(f'{url}:5000/token', json = {'capa': capacity, 'url': url}, verify = False)
         token = json.loads(response.content)['token']
     
     # Flask-SocketIO 서버 주소로 연결
@@ -29,7 +29,7 @@ def flAggregation(url, capacity, token = None, model_bytes = int):
     sio.emit('join', token)
 
     # 서버에게 연합 학습 요청 및 모델 전달
-    requests.post(f'{url}:5000/request', json = {'token': token, 'model_bytes': model_bytes}, verify = False)
+    requests.post(f'{url}:5000/request', json = {'token': token, 'model_bytes': model_bytes, 'url': url}, verify = False)
 
     # 서버로부터 응답을 받은 후 연결 종료
     sio.wait()

@@ -12,22 +12,25 @@ def onJoin(token):
 
 # token room의 subscriber(client)에게 FL_model 전달.
 @socketio.on('servSend')
-def serverSend(token):
-    model_bytes = fedModels(token)
+def serverSend(token, url):
+    model_bytes = fedModels(token, url)
     json = {'token': token, 'model_bytes': model_bytes}
     socketio.emit('cliRecv', json, to = token)
-    colReq = connReq()
+
+    colReq = connReq(url)
+    colToken = connToken(url)
     colReq.delete_many({'token': token})
+    colToken.delete_one({'token': token})
 
 # token 생성 및 token의 capa 저장.
 @app.route('/token', methods = ['POST'])
 def genToken():
     if request.method == 'POST':
-        token = generateToken()
-        # insert token to MongoDB
-        colToken = connToken()
-        colToken.insert_one({'token': token, 'capa': request.get_json()['capa']})
-        return token
+        json = request.get_json()
+        token = generateToken(json['url'])
+        colToken = connToken(json['url'])
+        colToken.insert_one({'token': token, 'capa': json['capa']})
+        return {'token': token}
     
 
 # client로부터 모델 수신 및 capa 충족 시 연합 학습과 클라이언트로 모델 전달. 
@@ -37,14 +40,14 @@ def cliReq():
         # json = {'token': token, 'model_bytes': model_bytes}
         json = request.get_json()
         
-        colReq = connReq()
+        colReq = connReq(json['url'])
         colReq.insert_one(json)
 
-        colToken = connToken()
+        colToken = connToken(json['url'])
         capacity = colToken.find_one({'token': json['token']})['capa']
 
         if colReq.count_documents({'token': json['token']}) == capacity:
-            serverSend(json['token'])
+            serverSend(json['token'], json['url'])
 
         return {'status': 'success'}
 

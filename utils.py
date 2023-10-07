@@ -4,27 +4,27 @@ import random, string
 from methods import *
 
 # connect to MongoDB's request collection
-def connReq():
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
+def connReq(url):
+    client = pymongo.MongoClient(f"mongodb://{url}:27017/")
     db = client["mydatabase"]
     collection = db['requests']
     return collection
 
-def connToken():
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
+def connToken(url):
+    client = pymongo.MongoClient(f"mongodb://{url}:27017/")
     db = client["mydatabase"]
     collection = db['tokens']
     return collection
 
-def generateToken():
-    colReq = connToken()
+def generateToken(url):
+    colReq = connToken(url)
     while True:
         token = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
         if colReq.count_documents({'token': token}) == 0:
             return token
 
-def fedModels(token):
-    colReq = connReq()
+def fedModels(token, url):
+    colReq = connReq(url)
     documents = colReq.find({"token" : token})
     models = []
 
