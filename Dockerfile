@@ -4,6 +4,8 @@ COPY requirements.txt /app/requirements.txt
 COPY sioServer.py /app/sioServer.py
 COPY utils.py /app/utils.py
 COPY methods.py /app/methods.py
+COPY container_start.sh /app/container_start.sh
+COPY docker_run.sh /app/docker_run.sh
 
 WORKDIR /app
 
