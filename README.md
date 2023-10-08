@@ -33,3 +33,7 @@ model_bytes: Reading the model file as a bytes object via file.read()
     flAggregation(url, capacity = capacity, token = None, model_bytes = model_bytes)
 
 Finally, you can see that a federated model file is created in the model directory.
+
+If you can use Docker, try this and Run above python command.
+
+    sh setting_for_client.sh
