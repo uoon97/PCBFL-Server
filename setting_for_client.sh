@@ -1,4 +1,4 @@
-docker build -t client:0.0 -f ./client/Dockerfile .
+docker build -t client:0.0 -f Dockerfile.client .
 docker run -it --entrypoint sh client:0.0
 
 # python
