@@ -1,7 +1,5 @@
-import os, io
-import pymongo, torch
+import pymongo
 import random, string
-from methods import *
 
 # connect to MongoDB's request collection
 def connReq(url):
