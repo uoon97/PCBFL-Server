@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_socketio import SocketIO, join_room
-from utils import *
+from util import *
 from methods import *
 
 app = Flask(__name__)

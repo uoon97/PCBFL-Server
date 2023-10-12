@@ -1,15 +1,16 @@
 # Federated Aggreagation Methods
 
 import torch
-from utils import *
+from util import *
 import io, os
 
 class federation:
 
     def __init__(self, token, url, method = None):
-
-        torch.hub.load('ultralytics/yolov5', 'yolov5m')
         
+        
+        torch.hub.load('ultralytics/yolov5', 'yolov5m')
+
         self.token = token
 
         colReq = connReq(url)
