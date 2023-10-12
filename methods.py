@@ -15,7 +15,7 @@ class federation:
         colReq = connReq(url)
         documents = colReq.find({"token" : token})
         models = [torch.load(io.BytesIO(eval(doc['model_bytes'])))['model'] for doc in documents]
-
+        print(len(models))
         self.models = models
 
         if method is not None:
@@ -38,10 +38,10 @@ class federation:
     def fedavg(self):
         model = torch.load('yolov5m.pt')
         fed_dict = {}
-        for key in model.state_dict().keys():
+        for key in model['model'].state_dict().keys():
             fed_dict[key] = sum([m.state_dict()[key] for m in self.models])/len(self.models)
 
-        model.load_state_dict(fed_dict)
+        model['model'].load_state_dict(fed_dict)
         return self.to_bytes(model)
         
 
