@@ -15,6 +15,7 @@ def onJoin(token):
 @socketio.on('servSend')
 def serverSend(token, url):
     model_bytes = federation(token, url).fedavg()
+    print(model_bytes)
 
     json = {'token': token, 'model_bytes': str(model_bytes)}
     socketio.emit('cliRecv', json, to = token)

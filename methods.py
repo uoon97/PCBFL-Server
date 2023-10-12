@@ -4,12 +4,11 @@ import torch
 from util import *
 import io, os
 
+torch.hub.load('ultralytics/yolov5', 'yolov5m')
+
 class federation:
 
     def __init__(self, token, url, method = None):
-        
-        
-        torch.hub.load('ultralytics/yolov5', 'yolov5m')
 
         self.token = token
 
