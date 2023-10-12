@@ -1,5 +1,5 @@
 # Federated Aggreagation Methods
-
+import copy
 import torch
 from util import *
 import io, os
@@ -14,16 +14,9 @@ class federation:
 
         colReq = connReq(url)
         documents = colReq.find({"token" : token})
-        models = [torch.load(io.BytesIO(eval(doc['model_bytes'])))['model'] for doc in documents]
+        models = [torch.load(io.BytesIO(eval(doc['model_bytes']))) for doc in documents]
         print(len(models))
         self.models = models
-
-        if method is not None:
-            if method == 'fedavg':
-                return self.fedavg()
-            
-            if method == 'fedprox':
-                return self.fedprox()
 
     def to_bytes(self, model):
         torch.jit.save(model, f"models/{self.token}.pt")
@@ -37,10 +30,10 @@ class federation:
 
     def fedavg(self):
         print('fedavg')
-        model = torch.load('yolov5m.pt')
+        model = copy.deepcopy(self.models[0])
         fed_dict = {}
-        for key in model['model'].state_dict().keys():
-            fed_dict[key] = sum([m.state_dict()[key] for m in self.models])/len(self.models)
+        for key in model.state_dict().keys():
+            fed_dict[key] = sum([m['model'].state_dict()[key] for m in self.models])/len(self.models)
 
         model['model'].load_state_dict(fed_dict)
         return self.to_bytes(model)
