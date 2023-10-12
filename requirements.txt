@@ -3,3 +3,5 @@ pymongo
 python-engineio
 python-socketio
 Flask-socketIO
+torchvision
+dill

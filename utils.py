@@ -22,19 +22,3 @@ def generateToken(url):
         token = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
         if colReq.count_documents({'token': token}) == 0:
             return token
-
-def fedModels(token, url):
-    colReq = connReq(url)
-    documents = colReq.find({"token" : token})
-    models = []
-
-    for doc in enumerate(documents):
-        models.append(torch.jit.load(io.BytesIO(doc['model_bytes'])))
-
-    # torch.jit.save(fedMethod(models), f'models/model_{token}.pt')
-
-    with open(f"models/model_{token}.pt", "wb") as f:
-        model_bytes = f.read()
-    
-    os.remove(f"models/{token}.pt")
-    return model_bytes

@@ -1,2 +1,6 @@
 __pycache__
 model.pt
+yolov5s.pt
+best_49.pt
+best_50.pt
+best_51.pt
