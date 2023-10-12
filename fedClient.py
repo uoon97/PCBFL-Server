@@ -16,10 +16,10 @@ def flAggregation(url, capacity, model_bytes, token = None):
     # 서버로부터 message 이벤트를 수신하면 호출
     @sio.on('cliRecv')
     def clientReceive(json):
-        model = torch.load(io.BytesIO(eval(json['model_bytes'])))['model']
-        torch.jit.save(model, f"model/model_{json['token']}.pt")
+        torch.hub.load('ultralytics/yolov5', 'yolov5m')
+        model = torch.load(io.BytesIO(eval(json['model_bytes'])))
+        torch.save(model, f"model_{json['token']}.pt")
         sio.disconnect()
-        exit()
 
     # 서버로부터 토큰 발급
     if token == None:

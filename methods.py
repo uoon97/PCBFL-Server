@@ -8,7 +8,7 @@ torch.hub.load('ultralytics/yolov5', 'yolov5m')
 
 class federation:
 
-    def __init__(self, token, url, method = None):
+    def __init__(self, token, url):
 
         self.token = token
 
@@ -18,17 +18,16 @@ class federation:
         self.models = models
 
     def to_bytes(self, model):
-        torch.jit.save(model, f"models/{self.token}.pt")
+        torch.save(model, f"{self.token}.pt")
 
-        with open(f"models/{self.token}.pt", "wb") as f:
+        with open(f"{self.token}.pt", "rb") as f:
             model_bytes = f.read()
 
-        os.remove(f"models/{self.token}.pt")
+        os.remove(f"{self.token}.pt")
         return model_bytes
 
 
     def fedavg(self):
-        print('fedavg')
         model = copy.deepcopy(self.models[0])
         fed_dict = {}
         for key in model['model'].state_dict().keys():

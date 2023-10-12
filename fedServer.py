@@ -14,11 +14,8 @@ def onJoin(token):
 # token room의 subscriber(client)에게 FL_model 전달.
 @socketio.on('servSend')
 def serverSend(token, url):
-    print('send:', token)
     fed = federation(token, url)
     model_bytes = fed.fedavg()
-
-    print(model_bytes)
 
     json = {'token': token, 'model_bytes': str(model_bytes)}
     socketio.emit('cliRecv', json, to = token)
