@@ -7,6 +7,9 @@ COPY methods.py /app/methods.py
 
 WORKDIR /app
 
+USER root
+RUN chmod -R 777 /app
 RUN pip3 install -r requirements.txt
+
 
 CMD ["python3", "fedServer.py"]
