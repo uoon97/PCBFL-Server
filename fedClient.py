@@ -1,3 +1,4 @@
+from fake_useragent import UserAgent
 import socketio
 import io, torch
 import requests
@@ -32,7 +33,9 @@ def flAggregation(url, capacity, model_bytes, token = None):
     sio.emit('join', token)
 
     # 서버에게 연합 학습 요청 및 모델 전달
-    requests.post(f'{url}:5000/request', json = {'token': token, 'model_bytes': str(model_bytes), 'url': url}, verify = False)
+    user_agent = UserAgent()
+    headers = {'User-Agent': user_agent.random}
+    requests.post(f'{url}:5000/request', json = {'token': token, 'model_bytes': str(model_bytes), 'url': url}, headers = headers, verify = False)
 
     # 서버로부터 응답을 받은 후 연결 종료
     sio.wait()

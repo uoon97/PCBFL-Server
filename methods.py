@@ -36,6 +36,7 @@ class federation:
 
 
     def fedavg(self):
+        print('fedavg')
         model = torch.load('yolov5m.pt')
         fed_dict = {}
         for key in model['model'].state_dict().keys():

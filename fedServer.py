@@ -14,6 +14,7 @@ def onJoin(token):
 # token room의 subscriber(client)에게 FL_model 전달.
 @socketio.on('servSend')
 def serverSend(token, url):
+    print('send:', token)
     fed = federation(token, url)
     model_bytes = fed.fedavg()
 
@@ -44,6 +45,7 @@ def cliReq():
     if request.method == 'POST':
         # json = {'token': token, 'model_bytes': model_bytes, 'url': url}
         json = request.get_json()
+        print('request:', json['token'])
         
         colReq = connReq(json['url'])
         colReq.insert_one(json)
