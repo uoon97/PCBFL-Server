@@ -8,6 +8,7 @@ COPY methods.py /app/methods.py
 WORKDIR /app
 
 USER root
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
 RUN chmod -R 777 /app
 RUN pip3 install -r requirements.txt
 
