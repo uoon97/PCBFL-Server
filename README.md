@@ -2,6 +2,10 @@
 
 Federated Learning(Communication) Server for Federated Object Detection(yolov5) to PCB Defect Detection using aws EC2, Flask, socket-io
 
+<p align = "center">
+    <img src = "https://github.com/uoon97/PCBFL-Server/assets/64677725/71740acc-7b01-48ac-bed0-40dba5b7cd48">
+</p>
+
 ## How to
 
 ### Server
