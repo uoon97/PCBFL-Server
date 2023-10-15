@@ -1,0 +1,8 @@
+Flask
+python-engineio
+python-socketio
+Flask-socketIO
+opencv-python
+torchvision
+fake-useragent
+dill
