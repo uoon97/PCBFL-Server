@@ -1,6 +1,10 @@
-# PCB_FL
+# PCB Defect Detection FL Server
 
-communication server for Federated Object Detection, Image Classification using Flask, python-socketIO.
+Federated Learning(Communication) Server for Federated Object Detection(yolov5) to PCB Defect Detection using aws EC2, Flask, socket-io
+
+<p align = "center">
+    <img src = "https://github.com/uoon97/PCBFL-Server/assets/64677725/71740acc-7b01-48ac-bed0-40dba5b7cd48">
+</p>
 
 ## How to
 
@@ -10,7 +14,7 @@ Clone git repo on EC2:
 
     sudo yum update -y
     sudo yum install git -y
-    git clone https://github.com/uoon97/PCB_FL
+    git clone https://github.com/uoon97/PCBFL-Server
 
 Run shell script files to build docker image:
 
