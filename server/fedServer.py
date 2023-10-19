@@ -21,9 +21,7 @@ def serverSend(token, url):
     socketio.emit('cliRecv', json, to = token)
 
     colReq = connReq(url)
-    colToken = connToken(url)
     colReq.delete_many({'token': token})
-    colToken.delete_one({'token': token})
 
 # token 생성 및 token의 capa 저장.
 @app.route('/token', methods = ['POST'])
